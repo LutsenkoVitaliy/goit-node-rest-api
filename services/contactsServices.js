@@ -5,19 +5,19 @@ import { nanoid } from 'nanoid';
 const contactsPath = path.join(__dirname, '../db/contacts.json');
 
 
-async function listContacts() {
+export async function listContacts() {
   const data = await fs.readFile(contactsPath);
   return JSON.parse(data)
 }
 
-async function getContactById(contactId) {
+export async function getContactById(contactId) {
   const contacts = await listContacts();
   const result = contacts.find(item => item.id === contactId);
   return result || null
   // ...твій код. Повертає об'єкт контакту з таким id. Повертає null, якщо контакт з таким id не знайдений.
 }
 
-async function removeContact(contactId) {
+export async function removeContact(contactId) {
   const contacts = await listContacts();
   const index = contacts.findIndex(item => item.id === contactId);
   if (index === -1) {
@@ -29,7 +29,7 @@ async function removeContact(contactId) {
   // ...твій код. Повертає об'єкт видаленого контакту. Повертає null, якщо контакт з таким id не знайдений.
 }
 
-async function addContact(name, email, phone) {
+export async function addContact(name, email, phone) {
   const contacts = await listContacts();
   const newContact = {
     id: nanoid(),
@@ -44,9 +44,3 @@ async function addContact(name, email, phone) {
 }
 
 
-module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact
-}
