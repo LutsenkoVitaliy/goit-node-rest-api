@@ -1,5 +1,4 @@
-import {listContacts, getContactById, removeContact, addContact} from "../services/contactsServices.js";
-import { createContactSchema, updateContactSchema } from "../schemas/contactsSchemas.js";
+import {listContacts, getContactById, removeContact, addContact, updateContactById} from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js";
 
 export const getAllContacts = async (req, res, next) => {
@@ -9,9 +8,6 @@ export const getAllContacts = async (req, res, next) => {
 
   } catch (error) {
     next(error);
-    // res.status(500).json({
-    //   message: "Server error"
-    // })
   }
 };
 
@@ -22,20 +18,10 @@ export const getOneContact = async (req, res, next) => {
     const result = await getContactById(id);
     if (!result) {
       throw HttpError(404);
-      // const error = new Error("Not found");
-      // error.status = 404;
-      // throw error;
-      // return res.status(404).json({
-      //   message: "Not found"
-      // })
     }
     res.json(result);
   } catch (error) {
     next(error);
-    // const {status = 500, message = "Server error"} = error
-    // res.status(500).json({
-    //   message,
-    // })
   }
 };
 
@@ -46,8 +32,7 @@ export const deleteContact = async (req, res, next) => {
     if (!result) {
       throw HttpError(404);
     }
-    console.log(result);
-    res.json(result);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }  
@@ -56,20 +41,32 @@ export const deleteContact = async (req, res, next) => {
 
 export const createContact = async (req, res, next) => {
   try {
-    const {error} = createContact.validate(req.body); 
-    console.log(error);
+    // const {error} = createContactSchema.validate(req.body); 
+    // if (error) {
+    //   throw HttpError(400);
+    // }
     // console.log(req.body); // тело запроса 
-    // const result = await addContact(req.body);
-    // res.status(201).json(result);
+    const result = await addContact(req.body);
+    res.status(201).json(result);
   } catch (error) {
     next(error);
   }
 };
 
-// {
-//   "name": "Kianu Rivz",
-//   "email": "kia.rivz@vestibul.co.uk",
-//   "phone": "(992) 914-4332"
-// }
+export const updateContact = async (req, res, next) => {
+  try {
+    // const {error} = updateContactSchema.validate(req.body); 
+    // if (error) {
+    //   throw HttpError(400);
+    // }
+    const {id} = req.params;
+    const result = await updateContactById(id, req.body);
+    if (!result) {
+      throw HttpError(404);
+    }
+    res.json(result);
 
-export const updateContact = (req, res) => {};
+  } catch (error) {
+    next(error);
+  }
+};
