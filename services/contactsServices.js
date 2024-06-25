@@ -1,8 +1,13 @@
 import fs from 'fs/promises';
-import path from 'path';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 import { nanoid } from 'nanoid';
 
-const contactsPath = path.join(__dirname, '../db/contacts.json');
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const contactsPath = join(__dirname, '../db/contacts.json');
 
 
 export async function listContacts() {
