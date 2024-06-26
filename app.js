@@ -5,8 +5,11 @@ import mongoose from "mongoose";
 
 import contactsRouter from "./routes/contactsRouter.js";
 
-const DB_HOST = "mongodb+srv://lutsenko996:nLlkObqk10Wa1KOJ@atlascluster.zwxkrej.mongodb.net/"
-mongoose.connect()
+const DB_HOST = "mongodb+srv://lutsenko996:nLlkObqk10Wa1KOJ@atlascluster.zwxkrej.mongodb.net/db-contacts?retryWrites=true&w=majority&appName=AtlasCluster";
+
+mongoose.connect(DB_HOST)
+  .then(() => console.log("Database connection successful"))
+  .catch(error => console.log(error.message))
 
 const app = express();
 
