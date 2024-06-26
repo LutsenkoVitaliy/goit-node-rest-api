@@ -1,8 +1,12 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import mongoose from "mongoose";
 
 import contactsRouter from "./routes/contactsRouter.js";
+
+const DB_HOST = "mongodb+srv://lutsenko996:nLlkObqk10Wa1KOJ@atlascluster.zwxkrej.mongodb.net/"
+mongoose.connect()
 
 const app = express();
 
