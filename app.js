@@ -1,8 +1,14 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import mongoose from "mongoose";
+import { DB_HOST } from "./config.js";
 
 import contactsRouter from "./routes/contactsRouter.js";
+
+mongoose.connect(DB_HOST)
+  .then(() => console.log("Database connection successful"))
+  .catch(error => console.log(error.message))
 
 const app = express();
 
